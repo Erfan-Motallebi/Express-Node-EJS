@@ -32,31 +32,19 @@ app.use(morgan('dev', {
 
 
 // mongoose and mongo sandbox routes
-app.get('/add-blog', (req, res) => {
-    const blog = new Blog({
-        title: 'New blog',
-        snippet: 'about my new blog',
-        body: 'more about my blog'
-    });
 
-    blog.save()
+app.get('/', (req, res) => {
+    res.redirect('/blogs');
+})
+
+app.get('/blogs', (req, res) => {
+    Blog.find()
         .then(result => {
-            res.send(result)
+            res.render('index', { title: 'Home page', blogs: result })
         })
         .catch(err => {
             console.log(err);
         })
-})
-
-
-
-app.get('/', (req, res) => {
-    const blogs = [
-        { title: "Eric Developer", snippet: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,' },
-        { title: 'Junior Developer', snippet: ' sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia' },
-        { title: 'Senior Developer', snippet: ' cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere' }
-    ];
-    res.render('index', { title: 'Home page', blogs })
 })
 
 app.get('/about', (req, res) => {
