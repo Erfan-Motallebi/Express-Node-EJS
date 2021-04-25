@@ -53,6 +53,19 @@ app.post('/blogs', (req, res) => {
         .then(result => {
             res.redirect('/blogs')
         })
+        .catch(err => {
+            console.log(err);
+        })
+})
+
+app.get('/blogs/:id', (req, res) => {
+    Blog.findById(req.params.id)
+        .then(result => {
+            res.render('details', { blog: result, title: "Single Blog" })
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
 })
 
 

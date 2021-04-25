@@ -88,3 +88,19 @@ textarea {
   font-size: 1.2em;
   cursor: pointer;
 }
+
+.main {
+  margin: 0 15px;
+  border-left: solid 5px red;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.3rem;
+  padding: 0 20px;
+}
+.main > h1 {
+  margin: 5px 0;
+}
+.main:hover h1 {
+  color: red;
+}
