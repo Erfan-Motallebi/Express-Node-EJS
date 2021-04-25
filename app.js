@@ -22,7 +22,7 @@ app.set('view engine', 'ejs');
 
 
 app.use(express.static('public'))
-
+app.use(express.urlencoded({ extended: true }))
 
 app.use(morgan('dev', {
     skip: function (req, res) {
@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/blogs', (req, res) => {
-    Blog.find()
+    Blog.find().sort({ createdAt: 1 })
         .then(result => {
             res.render('index', { title: 'Home page', blogs: result })
         })
@@ -46,6 +46,17 @@ app.get('/blogs', (req, res) => {
             console.log(err);
         })
 })
+
+app.post('/blogs', (req, res) => {
+    const blog = new Blog(req.body)
+        .save()
+        .then(result => {
+            res.redirect('/blogs')
+        })
+})
+
+
+// posting blogs 
 
 app.get('/about', (req, res) => {
     res.render('about', { title: 'About us' })
