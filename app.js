@@ -9,7 +9,7 @@ const app = express();
 const dbURI = 'mongodb+srv://erfanfulldev:test123@node.jcbmo.mongodb.net/Node-tuts?retryWrites=true&w=majority';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => {
-        app.listen(3000, 'localhost', () => {
+        app.listen(3000, () => {
             console.log('listening to  [ localhost:3000 ]');
         })
 
@@ -47,26 +47,28 @@ app.get('/blogs', (req, res) => {
         })
 })
 
-app.post('/blogs', (req, res) => {
-    const blog = new Blog(req.body)
-        .save()
-        .then(result => {
-            res.redirect('/blogs')
-        })
-        .catch(err => {
-            console.log(err);
-        })
-})
 
 app.get('/blogs/:id', (req, res) => {
     Blog.findById(req.params.id)
         .then(result => {
-            res.render('details', { blog: result, title: "Single Blog" })
+            res.render('details', { blog: result, title: "Blog Detail" })
         })
         .catch(err => {
             console.log(err.message);
         })
 })
+
+app.delete('/blogs/:id', (req, res) => {
+    Blog.findByIdAndDelete(req.params.id)
+        .then(result => {
+            res.json({ redirect: '/blogs' })
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+})
+
+
 
 
 // posting blogs 
@@ -77,6 +79,19 @@ app.get('/about', (req, res) => {
 
 app.get('/blogs/create', (req, res) => {
     res.render('create', { title: 'Blog creating' })
+})
+
+
+app.post('/blogs', (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(id)) return false;
+    const blog = new Blog(req.body)
+        .save()
+        .then(result => {
+            res.redirect('/blogs')
+        })
+        .catch(err => {
+            console.log(err);
+        })
 })
 
 app.use((req, res) => {

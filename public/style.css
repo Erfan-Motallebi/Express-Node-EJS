@@ -100,7 +100,27 @@ textarea {
 }
 .main > h1 {
   margin: 5px 0;
+  width: 40%;
+  float: left;
+}
+.main .snippet {
+  clear: both;
 }
 .main:hover h1 {
   color: red;
+}
+
+a.delete {
+  display: inline-block;
+  color: red;
+  line-height: 2.5;
+  margin: 0 20px;
+  position: relative;
+  bottom: 0;
+}
+a.delete:hover {
+  color: black;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  cursor: pointer;
 }
